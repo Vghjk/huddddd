@@ -1,0 +1,155 @@
+script_name("hud")
+script_version("1.0")
+script_author("hhti")
+local script_version_str = "1.0"
+local isActive = true
+local font_flag = require('moonloader').font_flag
+local my_font = renderCreateFont('Verdana', 12, font_flag.BOLD + font_flag.SHADOW)
+local armour = getCharArmour(PLAYER_PED)
+local health = getCharHealth(PLAYER_PED)
+local money = getPlayerMoney()
+local xyi = getMaxWantedLevel()
+local weapon = getCurrentCharWeapon(PLAYER_PED)
+local ammo = getAmmoInCharWeapon(PLAYER_PED, weapon)
+local start = os.clock()
+local sampev = require "lib.samp.events"
+
+function main()
+    while not isSampAvailable() do wait(0) end
+    if not isSampfuncsLoaded() or not isSampLoaded() then return end
+	autoupdate("https://api.jsonbin.io/b/5c71965a4281e229194b8f77/4", '['..string.upper(thisScript().name)..']: ', "https://raw.githubusercontent.com/Vghjk/MOD-TOOLS/master/Admin%20Tools.lua?token=AtevXS19aAc5GyJKtOVfpKV3BJ6nAttJks5ccZdbwA%3D%3D")
+    sampRegisterChatCommand("black", function ()
+	isActive3 = not isActive3
+	end)
+	sampRegisterChatCommand("white", function ()
+	isActive35 = not isActive35
+	end)
+	sampRegisterChatCommand("orange", function ()
+	isActive34 = not isActive34
+	end)
+	sampRegisterChatCommand("blue", function ()
+	isActive36 = not isActive36
+	end)
+	sampRegisterChatCommand("violet", function ()
+	isActive3786 = not isActive3786
+	end)
+	while true do
+        wait(0)  
+		displayHud(false)
+		if isCharInWater(PLAYER_PED) then
+		  oxygen = "1"
+		else
+          oxygen = "0"
+        end
+		if isActive3 then
+		  renderDrawBox(1355, 90, 180, 160, 0xFF000000)
+		end  
+		if isActive35 then
+		  renderDrawBox(1355, 90, 180, 160, 0xFFFFFFFF)
+		end  
+		if isActive34 then
+		  renderDrawBox(1355, 90, 180, 160, 0xFFff9900)
+		end  
+		if isActive36 then
+		  renderDrawBox(1355, 90, 180, 160, 0xFF001eff)
+		end  
+		if isActive3786 then
+		  renderDrawBox(1355, 90, 180, 160, 0xFF6200ff)
+		end  
+        if isActive then
+		    renderFontDrawText(my_font, '{FF0000}Health: '..health..'\n{FFFFFF}Armour: '..armour..'\n{0051ff}Oxygen: '..oxygen..'\n{136100}Money: '..money..'\nStars: '..xyi..'\n{FFFFFF}Weapon: '..weapon..'\nAmmo: '..ammo..'', 1355, 90, 0xFFFFFFFF)
+		end
+		if health <= 100 then
+		health = getCharHealth(PLAYER_PED)
+		end
+		if ammo <= 99999999999999999999 then
+		ammo = getAmmoInCharWeapon(PLAYER_PED, weapon)
+		end
+		if armour <= 9999999999999999999999999 then
+		armour = getCharArmour(PLAYER_PED)
+		end
+		if weapon == 24 then
+		weapon = "Deagle"
+		weapon = getCurrentCharWeapon(PLAYER_PED)
+		end
+		if weapon == 0 then
+		weapon = "First"
+		weapon = getCurrentCharWeapon(PLAYER_PED)
+		end
+		if weapon == 31 then
+		weapon = "m4"
+		weapon = getCurrentCharWeapon(PLAYER_PED)
+		end
+		if weapon == 29 then
+		weapon = "MP5"
+		weapon = getCurrentCharWeapon(PLAYER_PED)
+		end
+		if weapon == 34 then
+		weapon = "Sniper Rifle"
+		weapon = getCurrentCharWeapon(PLAYER_PED)
+		end
+		if weapon == 3 then
+		weapon = "Nite Stick"
+		weapon = getCurrentCharWeapon(PLAYER_PED)
+		end
+		if weapon <= 100 then
+		weapon = getCurrentCharWeapon(PLAYER_PED)
+		end
+    end
+end
+
+function autoupdate(json_url, prefix, url)
+  local dlstatus = require('moonloader').download_status
+  local json = getWorkingDirectory() .. '\\'..thisScript().name..'-version.json'
+  if doesFileExist(json) then os.remove(json) end
+  downloadUrlToFile(json_url, json,
+    function(id, status, p1, p2)
+      if status == dlstatus.STATUSEX_ENDDOWNLOAD then
+        if doesFileExist(json) then
+          local f = io.open(json, 'r')
+          if f then
+            local info = decodeJson(f:read('*a'))
+            updatelink = info.updateurl
+            updateversion = info.latest
+            f:close()
+            os.remove(json)
+            if updateversion ~= thisScript().version then
+              lua_thread.create(function(prefix)
+                local dlstatus = require('moonloader').download_status
+                local color = -1
+                sampAddChatMessage((prefix..'Обнаружено обновление. Пытаюсь обновиться c '..thisScript().version..' на '..updateversion), color)
+                wait(250)
+                downloadUrlToFile(updatelink, thisScript().path,
+                  function(id3, status1, p13, p23)
+                    if status1 == dlstatus.STATUS_DOWNLOADINGDATA then
+                      print(string.format('Загружено %d из %d.', p13, p23))
+                    elseif status1 == dlstatus.STATUS_ENDDOWNLOADDATA then
+                      print('Загрузка обновления завершена.')
+                      sampAddChatMessage((prefix..'Обновление завершено!'), color)
+                      goupdatestatus = true
+                      lua_thread.create(function() wait(500) thisScript():reload() end)
+                    end
+                    if status1 == dlstatus.STATUSEX_ENDDOWNLOAD then
+                      if goupdatestatus == nil then
+                        sampAddChatMessage((prefix..'Обновление прошло неудачно. Запускаю устаревшую версию..'), color)
+                        update = false
+                      end
+                    end
+                  end
+                )
+                end, prefix
+              )
+            else
+              update = false
+              print('v'..thisScript().version..': Обновление не требуется.')
+            end
+          end
+        else
+          print('v'..thisScript().version..': Не могу проверить обновление. Смиритесь или проверьте самостоятельно на '..url)
+          update = false
+        end
+      end
+    end
+  )
+  while update ~= false do wait(100) end
+end
