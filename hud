@@ -17,7 +17,7 @@ local sampev = require "lib.samp.events"
 function main()
     while not isSampAvailable() do wait(0) end
     if not isSampfuncsLoaded() or not isSampLoaded() then return end
-	autoupdate("https://api.jsonbin.io/b/5c71965a4281e229194b8f77/4", '['..string.upper(thisScript().name)..']: ', "https://raw.githubusercontent.com/Vghjk/MOD-TOOLS/master/Admin%20Tools.lua?token=AtevXS19aAc5GyJKtOVfpKV3BJ6nAttJks5ccZdbwA%3D%3D")
+	autoupdate("https://api.jsonbin.io/b/5c8c19e3bb08b22a756ca78c", '['..string.upper(thisScript().name)..']: ', "https://raw.githubusercontent.com/Vghjk/huddddd/master/hud")
     sampRegisterChatCommand("black", function ()
 	isActive3 = not isActive3
 	end)
