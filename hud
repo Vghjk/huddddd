@@ -326,7 +326,6 @@ local imBool2 = imgui.ImBool(false)
 local imBool3 = imgui.ImBool(false)
 local imBool4 = imgui.ImBool(false)
 local menu1 = imgui.ImBool(false)
-local menu2 = imgui.ImBool(false)
 
 function imgui.OnDrawFrame()
 	local iScreenWidth, iScreenHeight = getScreenResolution()
