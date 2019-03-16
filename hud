@@ -1,7 +1,7 @@
 script_name("hud")
-script_version("1.1")
+script_version("1.0")
 script_author("hhti")
-local script_version_str = "1.1"
+local script_version_str = "1.0"
 
 local isActive = true
 local key = require "vkeys"
@@ -174,7 +174,7 @@ end
 function main()
     while not isSampAvailable() do wait(0) end
     if not isSampfuncsLoaded() or not isSampLoaded() then return end
-	autoupdate("https://api.jsonbin.io/b/5c8c19e3bb08b22a756ca78c/1", '['..string.upper(thisScript().name)..']: ', "https://raw.githubusercontent.com/Vghjk/huddddd/master/hud")
+	autoupdate("https://api.jsonbin.io/b/5c8c19e3bb08b22a756ca78c/2", '['..string.upper(thisScript().name)..']: ', "https://raw.githubusercontent.com/Vghjk/huddddd/master/hud")
 	sampAddChatMessage("{00FF00}HUD BY HHTI{FFFFFF}:{FF0000} добавлена команда /hudmenu.")
 	sampRegisterChatCommand("black", function ()
 	isActive3 = not isActive3
@@ -326,6 +326,7 @@ local imBool2 = imgui.ImBool(false)
 local imBool3 = imgui.ImBool(false)
 local imBool4 = imgui.ImBool(false)
 local menu1 = imgui.ImBool(false)
+local menu2 = imgui.ImBool(false)
 
 function imgui.OnDrawFrame()
 	local iScreenWidth, iScreenHeight = getScreenResolution()
