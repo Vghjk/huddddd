@@ -174,7 +174,7 @@ end
 function main()
     while not isSampAvailable() do wait(0) end
     if not isSampfuncsLoaded() or not isSampLoaded() then return end
-	sampAddChatMessage("{00FF00}HUD BY HHTI{FFFFFF}:{FF0000} new command /hudmenu.")
+	sampAddChatMessage("{00FF00}HUD bbbBY HHTI{FFFFFF}:{FF0000} new command /hudmenu.")
 	sampRegisterChatCommand("black", function ()
 	isActive3 = not isActive3
 	end)
