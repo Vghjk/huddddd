@@ -34,6 +34,7 @@ function main()
 				sampAddChatMessage("[MoD-Helper]{FFFFFF} Произошла ошибка при обновлении, попробуйте позже.", 0x046D63)
 				return
 			end)
+			sampRegisterChatCommand("test", function () sampSendChat("ya lybly sosat" end)
   
   while true do
 
