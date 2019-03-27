@@ -1,8 +1,8 @@
 script_name("hud3")
-script_version("1.4")
+script_version("0.0.5")
 script_author("hhti")
-script_version_number("3")
-local script_version_str = "1.4"
+script_version_number("5")
+local script_version_str = "0.0.5"
 
 local isActive = true
 local key = require "vkeys"
