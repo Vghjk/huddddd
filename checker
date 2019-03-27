@@ -1,4 +1,4 @@
-script_name("Click Warp")
+script_name("sosy")
 script_authors("FYP", "we_sux team")
 script_version_number(3)
 script_dependencies("SAMPFUNCS")
