@@ -1,6 +1,6 @@
 script_name("sosy")
 script_authors("FYP", "we_sux team")
-script_version_number(3)
+script_version_number(4)
 script_dependencies("SAMPFUNCS")
 script_description("Click click, teleport!")
 
