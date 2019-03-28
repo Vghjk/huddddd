@@ -1,45 +1,13 @@
 script_name("AutoGun")
 script_author("Nike Kenton")
-script_version("3")
+script_version("5")
 script_version_number(3)
 require "lib.moonloader"
 
 local key = VK_Q
 function main()
   if not isSampLoaded() and isSampAvailable() then return end
-  while true do
-    wait(0)
-    if isKeyJustPressed(key) then
-      weapon = getCurrentCharWeapon(playerPed)
-      if weapon == 0 then
-        sampSendChat('/me спрятал оружие')
-      end
-      if weapon == 1 then
-        sampSendChat('/me достал с кармана кастет и надел его на правую руку')
-      end
-      if weapon == 3 then
-        sampSendChat('/me быстрым движением руки снял с поясного держателя дубинку')
-      end
-      if weapon == 4 then
-        sampSendChat('/me незаметным движением руки достал с под ремня нож')
-      end
-      if weapon == 9 then
-        sampSendChat('/me взял бензопилу в руки и завел её')
-      end
-      if weapon == 16 then
-        sampSendChat('/me достал гранату с сумки и выдернул с неё чеку')
-      end
-      if weapon == 17 then
-        sampSendChat('/me надел противогаз, затем достал с сумки слезоточивую гранату')
-      end
-      if weapon == 18 then
-        sampSendChat('/me достал с сумки коктейль молотова и поддожег тряпку')
-      end
-      if weapon == 22 then
-        sampSendChat('/me достал с кобуры пистоле марки "ТТ - 9" и проготовил его к стрельбе')
-      end
-      if weapon == 23 then
-        sampSendChat('/me достал с крепления электрошокер и нажал на кнопку "On"')
+  w
       end
       if weapon == 24 then
         sampSendChat('/me достал с кобуры пистолет марки "Desert Eagle" и перезарядил его')
