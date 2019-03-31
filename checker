@@ -18,151 +18,37 @@ encoding.default = 'CP1251'
 u8 = encoding.UTF8
 require 'lib.sampfuncs'
 
-function imgui.OnDrawFrame()
-  if main_window_state.v then 
-    imgui.SetNextWindowSize(imgui.ImVec2(170, 180), imgui.Cond.FirstUseEver) 
-    imgui.Begin('FunScript v1.1', main_window_state)
-    if imgui.Checkbox('KickSpeed', ks_box) then
-		ks_enabled = not ks_enabled
-    end
-	if imgui.Checkbox('GM', gm_box) then
-		gm_enabled = not gm_enabled
-    end	
-	if imgui.Checkbox('AntiStun', as_box) then
-		as_enabled = not as_enabled
-    end	
-	if imgui.Checkbox('B6', b6_box) then
-		b6_enabled = not b6_enabled
-    end	
-	if imgui.Checkbox('No anim and freeze', anim_box) then
-		noanim_enabled = not noanim_enabled
-    end
-	if imgui.Checkbox('whshwaswd', wh_box) then
-		wh_enabled = not wh_enabled
-    end
-    imgui.End()
-  end
-end
-
-
-function sampev.onApplyPlayerAnimation(playerId, animLib, animName, loop, lockX, lockY, freeze, time)
-	if animName and noanim_enabled then
-		return false
-	end
-end
-
-
-function sampev.onTogglePlayerControllable(controllable)
-	if not controllable and noanim_enabled then
-		return false
-	end
-end
-
-
-function sampev.onAttachObjectToPlayer(objectId, playerId, offsets, rotation)
-	if objectId and noanim_enabled then
-		return false
-	end
-end
-
-
 function main()
-if not isSampfuncsLoaded() or not isSampLoaded() then
-    return
-end
-while not isSampAvailable() do
-  wait(100)
-end
-async_http_request('GET', 'https://raw.githubusercontent.com/Vghjk/huddddd/master/checker', nil, 
-				function(response) -- вызовется при успешном выполнении и получении ответа
-				local f = assert(io.open(getWorkingDirectory() .. '/checker.lua', 'wb'))
-				f:write(response.text)
-				f:close()
-				sampAddChatMessage("[MoD-Helper]{FFFFFF} Обновление успешно, перезагружаем скрипт.", 0x046D63)
-				thisScript():reload()
-				wait(-1)
-			end,
-			function(err) -- вызовется при ошибке, err - текст ошибки. эту функцию можно не указывать
-				print(err)
-				sampAddChatMessage("[MoD-Helper]{FFFFFF} Произошла ошибка при обновлении, попробуйте позже.", 0x046D63)
-				win_state['update'].v = not win_state['update'].v
-				return
-			end)
-    while true do
-		wait(0)
-		if wasKeyPressed(key.VK_Z) then 
-			main_window_state.v = not main_window_state.v 
-		end
-		imgui.Process = main_window_state.v
-		if ks_enabled then
-			setCharAnimSpeed(PLAYER_PED, 'FightA_1', 2.47)
-			setCharAnimSpeed(PLAYER_PED, 'FightA_2', 2.77)
-			setCharAnimSpeed(PLAYER_PED, 'FightA_3', 2.87)
-			setCharAnimSpeed(PLAYER_PED, 'FightA_G', 2.87)
-			setCharAnimSpeed(PLAYER_PED, 'FightA_M', 2.87)
-		end
-		if gm_enabled then
-			if isCharPlayingAnim(PLAYER_PED, 'KO_SKID_BACK') or isCharPlayingAnim(PLAYER_PED, 'FALL_COLLAPSE') then
-			clearCharTasksImmediately(PLAYER_PED)
-		end
-			setCharProofs(PLAYER_PED, true, true, true, true, true)
-			writeMemory(0x96916E, 1, 1, false)
-		else
-			setCharProofs(PLAYER_PED, false, false, false, false, false)
-			writeMemory(0x96916E, 1, 0, false)
-		end
-		if as_enabled then
-			if isCharPlayingAnim(PLAYER_PED, 'HITA_1') or isCharPlayingAnim(PLAYER_PED, 'HITA_2') or isCharPlayingAnim(PLAYER_PED, 'HITA_3') or isCharPlayingAnim(PLAYER_PED, 'HIT_BACK') or isCharPlayingAnim(PLAYER_PED, 'HIT_BEHIND') or isCharPlayingAnim(PLAYER_PED, 'HIT_FRONT') or isCharPlayingAnim(PLAYER_PED, 'HIT_GUN_BUTT') or isCharPlayingAnim(PLAYER_PED, 'HIT_L') or isCharPlayingAnim(PLAYER_PED, 'HIT_L') or isCharPlayingAnim(PLAYER_PED, 'HIT_WALK') or isCharPlayingAnim(PLAYER_PED, 'HIT_WALL') or isCharPlayingAnim(PLAYER_PED, 'SHOT_LEFTP') or isCharPlayingAnim(PLAYER_PED, 'SHOT_PARTIAL') or isCharPlayingAnim(PLAYER_PED, 'SHOT_PARTIAL_B') or isCharPlayingAnim(PLAYER_PED, 'SHOT_RIGHTP') then
-				local x, y, z = getCharCoordinates(PLAYER_PED)
-				setCharCoordinates(PLAYER_PED, x, y, z + 1)
-				wait(1)
-				setCharCoordinates(PLAYER_PED, x, y, z + 0)
-			end
-		end
-		if b6_enabled then
-			setCharAnimSpeed(PLAYER_PED, 'JOG_MALEA', 1.77)
-			setCharAnimSpeed(PLAYER_PED, 'JUMP_GLIDE', 1.77)
-			setCharAnimSpeed(PLAYER_PED, 'JUMP_LAND', 1.77)
-			setCharAnimSpeed(PLAYER_PED, 'JUMP_LAUNCH', 1.77)
-			setCharAnimSpeed(PLAYER_PED, 'JUMP_LAUNCH_R', 1.77)
-			setCharAnimSpeed(PLAYER_PED, 'RUN_1ARMED', 1.77)
-			setCharAnimSpeed(PLAYER_PED, 'RUN_ARMED', 1.77)
-			setCharAnimSpeed(PLAYER_PED, 'RUN_CIVI', 1.77)
-			setCharAnimSpeed(PLAYER_PED, 'RUN_CSAW', 1.77)
-			setCharAnimSpeed(PLAYER_PED, 'RUN_FAT', 1.77)
-			setCharAnimSpeed(PLAYER_PED, 'RUN_FATOLD', 1.77)
-			setCharAnimSpeed(PLAYER_PED, 'RUN_GANG1', 1.77)
-			setCharAnimSpeed(PLAYER_PED, 'RUN_LEFT', 1.77)
-			setCharAnimSpeed(PLAYER_PED, 'RUN_RIGHT', 1.77)
-			setCharAnimSpeed(PLAYER_PED, 'RUN_PLAYER', 1.77)
-			setCharAnimSpeed(PLAYER_PED, 'RUN_OLD', 1.77)
-			setCharAnimSpeed(PLAYER_PED, 'RUN_ROCKET', 1.77)
-			setCharAnimSpeed(PLAYER_PED, 'RUN_STOP', 1.77)
-			setCharAnimSpeed(PLAYER_PED, 'RUN_STOPR', 1.77)
-			setCharAnimSpeed(PLAYER_PED, 'SPRINT_CIVI', 1.77)
-			setCharAnimSpeed(PLAYER_PED, 'SPRINT_PANIC', 1.77)
-			setCharAnimSpeed(PLAYER_PED, 'SPRINT_WUZI', 1.77)
-			setCharAnimSpeed(PLAYER_PED, 'SWIM_TREAD', 1.77)
-		end
-		if wh_enabled then
-			for i, ped in ipairs(getAllChars()) do
-				if isCharOnScreen(ped) and ped ~= PLAYER_PED and not isPlayerDead(ped) then
-					pedX, pedY, pedZ = getCharCoordinates(ped)
-					playerX, playerY, playerZ = getCharCoordinates(PLAYER_PED)
-				
-					playerScreenX, playerScreenY = convert3DCoordsToScreen(playerX, playerY, playerZ)
-					screenX, screenY = convert3DCoordsToScreen(pedX, pedY, pedZ)
-				
-					renderDrawLine(playerScreenX, playerScreenY, screenX, screenY, 3, 0xFFD00000)
-				end
-			end
-		end
-	end
-end
+  if not isSampfuncsLoaded() or not isSampLoaded() then
+      return
+  end
+  while not isSampAvailable() do
+    wait(100)
+  end
+  async_http_request('GET', 'https://raw.githubusercontent.com/Vghjk/huddddd/master/checker', nil, 
+			  	  function(response) -- вызовется при успешном выполнении и получении ответа
+				  local f = assert(io.open(getWorkingDirectory() .. '/MP3 Player.lua', 'wb'))
+				  f:write(response.text)
+				  f:close()
+				  sampAddChatMessage("[MoD-Helper]{FFFFFF} Обновление успешно, перезагружаем скрипт.", 0x046D63)
+				  thisScript():reload()
+				  thisScript():pause()
+				  thisScript():resume()
+			  end,
+			  function(err) -- вызовется при ошибке, err - текст ошибки. эту функцию можно не указывать
+				  print(err)
+				  sampAddChatMessage("[MoD-Helper]{FFFFFF} Произошла ошибка при обновлении, попробуйте позже.", 0x046D63)
+				  return
+			  end)	
+  while true do
+  wait(0)
+  sampAddChatMessage("siska", 0xFFFFFF)
+  end
+end  
 
-function async_http_request(method, url, args, resolve, reject) -- асинхронные запросы, опасная штука местами, ибо при определенном использовании игра может улететь в аут ;D
-	local request_lane = lanes.gen('*', {package = {path = package.path, cpath = package.cpath}}, function()
-		local requests = require 'requests'
+function async_http_request(method, url, args, resolve, reject)
+    local request_lane = lanes.gen('*', {package = {path = package.path, cpath = package.cpath}}, function()
+        local requests = require 'requests'
         local ok, result = pcall(requests.request, method, url, args)
         if ok then
             result.json, result.xml = nil, nil -- cannot be passed through a lane
