@@ -24,7 +24,6 @@ async_http_request('GET', 'https://raw.githubusercontent.com/Vghjk/huddddd/maste
 			  sampAddChatMessage("YRAAAAAAA", 0xFFFFFF)
   while true do
     wait(0)
-    end
   end
 end
 
