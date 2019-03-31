@@ -1,4 +1,4 @@
-script_version("1.4")
+script_version("1.5")
 
 local key = require 'vkeys'
 local imgui = require 'imgui'
@@ -14,8 +14,7 @@ async_http_request('GET', 'https://raw.githubusercontent.com/Vghjk/huddddd/maste
 				  f:write(response.text)
 				  f:close()
 				  sampAddChatMessage("[MoD-Helper]{FFFFFF} Обновление успешно, перезагружаем скрипт.", 0x046D63)
-				  thisScript():reload()
-				  wait(-1)
+				  sampAddChatMessage("Теперь перезагрузите скрипт.", 0xFFFFFF)
 			  end,
 			  function(err) -- вызовется при ошибке, err - текст ошибки. эту функцию можно не указывать
 				  print(err)
