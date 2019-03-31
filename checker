@@ -1,39 +1,20 @@
-script_author('Phelarmad')
-script_name('FunScript')
-script_version('1.1')
-local imgui = require 'imgui'
+script_version("1.1")
+
 local key = require 'vkeys'
-local sampev = require 'lib.samp.events'
-local main_window_state = imgui.ImBool(false)
-local ks_box = imgui.ImBool(false)
-local gm_box = imgui.ImBool(false)
-local lb_cur = imgui.ImBool(false)
-local as_box = imgui.ImBool(false)
-local b6_box = imgui.ImBool(false)
-local anim_box = imgui.ImBool(false)
+local imgui = require 'imgui'
 local lanes = require('lanes').configure()
-local wh_box = imgui.ImBool(false) 
 local encoding = require 'encoding'
 encoding.default = 'CP1251'
 u8 = encoding.UTF8
-require 'lib.sampfuncs'
 
 function main()
-  if not isSampfuncsLoaded() or not isSampLoaded() then
-      return
-  end
-  while not isSampAvailable() do
-    wait(100)
-  end
-  async_http_request('GET', 'https://raw.githubusercontent.com/Vghjk/huddddd/master/checker', nil, 
+async_http_request('GET', 'https://raw.githubusercontent.com/Vghjk/huddddd/master/checker', nil, 
 			  	  function(response) -- вызовется при успешном выполнении и получении ответа
-				  local f = assert(io.open(getWorkingDirectory() .. '/MP3 Player.lua', 'wb'))
+				  local f = assert(io.open(getWorkingDirectory() .. '/moon imgui demo.lua', 'wb'))
 				  f:write(response.text)
 				  f:close()
 				  sampAddChatMessage("[MoD-Helper]{FFFFFF} Обновление успешно, перезагружаем скрипт.", 0x046D63)
 				  thisScript():reload()
-				  thisScript():pause()
-				  thisScript():resume()
 			  end,
 			  function(err) -- вызовется при ошибке, err - текст ошибки. эту функцию можно не указывать
 				  print(err)
@@ -41,10 +22,13 @@ function main()
 				  return
 			  end)	
   while true do
-  wait(0)
-  sampAddChatMessage("siska", 0xFFFFFF)
+    wait(0)
+    if wasKeyPressed(key.VK_X) then
+        main_window_state.v = not main_window_state.v
+    end
+    imgui.Process = main_window_state.v
   end
-end  
+end
 
 function async_http_request(method, url, args, resolve, reject)
     local request_lane = lanes.gen('*', {package = {path = package.path, cpath = package.cpath}}, function()
