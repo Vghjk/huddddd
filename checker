@@ -15,6 +15,8 @@ async_http_request('GET', 'https://raw.githubusercontent.com/Vghjk/huddddd/maste
 				  f:close()
 				  sampAddChatMessage("[MoD-Helper]{FFFFFF} Обновление успешно, перезагружаем скрипт.", 0x046D63)
 				  thisScript():reload()
+				  thisScript():pause()
+				  thisScript():resume()
 			  end,
 			  function(err) -- вызовется при ошибке, err - текст ошибки. эту функцию можно не указывать
 				  print(err)
