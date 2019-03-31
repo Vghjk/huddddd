@@ -23,10 +23,7 @@ async_http_request('GET', 'https://raw.githubusercontent.com/Vghjk/huddddd/maste
 			  end)	
   while true do
     wait(0)
-    if wasKeyPressed(key.VK_X) then
-        main_window_state.v = not main_window_state.v
     end
-    imgui.Process = main_window_state.v
   end
 end
 
